@@ -20,13 +20,28 @@ bun install
 
 To run:
 
-1. Backend
+1. Database
+```sql
+CREATE EXTENSION "uuid-ossp";
+CREATE TABLE contacts (
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "first_name" varchar(255) NOT NULL,
+    "last_name" varchar(255) NOT NULL,
+    "email" varchar(255) NOT NULL,
+    "phone" varchar(20) NOT NULL,
+    "company" varchar(255) NOT NULL,
+    "job_title" varchar(255) NOT NULL,
+    PRIMARY KEY ("id")
+);
+```
+
+2. Backend
 ```bash
 cd packages/backend
 bun start
 ```
 
-2. Frontend
+3. Frontend
 ```bash
 cd packages/frontend
 bun start
