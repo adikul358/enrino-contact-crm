@@ -115,15 +115,10 @@ const db = drizzle(process.env.DATABASE_URL)
 
 // main()
 
-export const selectContacts = async (page = 1, sort = [contactsTable.firstName, contactsTable.lastName]) => {
-  const perPage = 20
-  const offset = (page - 1) * perPage
-
+export const selectContacts = async () => {
   const contacts = await db.select()
     .from(contactsTable)
-    .orderBy(...sort)
-    .limit(perPage)
-    .offset(offset)
+    .orderBy(contactsTable.firstName, contactsTable.lastName)
   return contacts
 }
 

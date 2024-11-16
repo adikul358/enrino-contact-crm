@@ -1,37 +1,12 @@
-import { desc } from "drizzle-orm"
-import { insertContact, selectContacts, updateContact, deleteContact as deleteContactDrizzle, checkDuplicate } from "../db"
-import { contactsTable } from "../db/schema"
+import { 
+  insertContact, 
+  selectContacts, 
+  updateContact, 
+  deleteContact as deleteContactDrizzle, 
+  checkDuplicate } from "../db"
 
 async function getContacts(request, reply) {
-  const { sort, page } = request.query
-  let sortOptions = [], pagination = 1, result
-
-  // Check for sort parameter in query string
-  if (sort) {
-
-    // Check for existence of parameter in pgTable
-    const col = contactsTable[sort]
-    if (col) {
-
-      // Check for descending option
-      if (sort[0] === "-") {
-        sortOptions = [desc(col)]
-      } else {
-        sortOptions = [col]
-      }
-    }
-  }
-
-  if (page) {
-    pagination = parseInt(page)
-  }
-
-  if (sortOptions.length > 0) {
-    result = await selectContacts(pagination, sortOptions)
-  } else {
-    result = await selectContacts(pagination)
-  }
-
+  const result = await selectContacts(pagination)
   return { result }
 }
 
