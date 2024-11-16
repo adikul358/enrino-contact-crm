@@ -6,7 +6,7 @@ import {
   checkDuplicate } from "../db"
 
 async function getContacts(request, reply) {
-  const result = await selectContacts(pagination)
+  const result = await selectContacts()
   return { result }
 }
 

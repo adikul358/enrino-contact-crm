@@ -8,6 +8,7 @@
     "start": "bun src/server.js"
   },
   "dependencies": {
+    "@fastify/cors": "^10.0.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.2",
     "fastify": "^5.1.0",
