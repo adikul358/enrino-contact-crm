@@ -36,6 +36,13 @@ CREATE TABLE contacts (
 ```
 
 2. Backend
+
+Add Database URL in .env file
+```bash
+# packages/backend/.env
+DATABASE_URL=postgresql://erino_backend:******@127.0.0.1/erino_contacts
+PORT=3000
+```
 ```bash
 cd packages/backend
 bun start
