@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteDialog from './DeleteDialog';
-import AddDialog from './AddDialog';
-import UpdateDialog from './UpdateDialog';
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/DeleteOutlined'
+import AddIcon from '@mui/icons-material/Add'
+import DeleteDialog from './DeleteDialog'
+import AddDialog from './AddDialog'
+import UpdateDialog from './UpdateDialog'
 
-export default function ContactsTable() {
+export default function ContactsTable () {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
@@ -51,20 +51,22 @@ export default function ContactsTable() {
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
+            label='Edit'
+            key={id}
+            className='textPrimary'
             onClick={handleEditClick(id, row)}
-            color="inherit"
+            color='inherit'
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
-            label="Delete"
+            label='Delete'
+            key={id}
             onClick={handleDeleteClick(id, row)}
-            color="inherit"
-          />,
-        ];
-      },
-    },
+            color='inherit'
+          />
+        ]
+      }
+    }
   ]
   const paginationModel = { page: 0, pageSize: 20 }
 
@@ -86,9 +88,9 @@ export default function ContactsTable() {
   return (
     <Paper sx={{ padding: 3 }}>
       <Button
-        component="label"
+        component='label'
         role={undefined}
-        variant="contained"
+        variant='contained'
         tabIndex={-1}
         startIcon={<AddIcon />}
         sx={{ marginBottom: 3 }}
@@ -105,8 +107,8 @@ export default function ContactsTable() {
         slotProps={{
           loadingOverlay: {
             variant: 'skeleton',
-            noRowsVariant: 'skeleton',
-          },
+            noRowsVariant: 'skeleton'
+          }
         }}
       />
       <AddDialog open={openAddDialog} setOpen={setOpenAddDialog} refresh={refreshData} />

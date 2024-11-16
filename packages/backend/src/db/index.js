@@ -5,6 +5,7 @@ import isEqual from '../lib/isEqual'
 
 const db = drizzle(process.env.DATABASE_URL)
 
+// Comment out and run 'bun src/db/index.js' to upload sample 100 contacts
 // async function main () {
 //   const sample = [
 //     {"firstName":"Veronika","lastName":"Kyngdon","email":"vkyngdon0@creativecommons.org","phone":"132-143-3704","company":"Topicstorm","jobTitle":"VP Quality Control"},
@@ -129,7 +130,7 @@ export const selectContacts = async () => {
 }
 
 export const insertContact = async (contact) => {
-  const returnId = await db.insert(contactsTable).values(contact).returning({ insertedId: contactsTable.id });
+  const returnId = await db.insert(contactsTable).values(contact).returning({ insertedId: contactsTable.id })
   return returnId
 }
 
@@ -137,7 +138,7 @@ export const updateContact = async (id, contact) => {
   const res = await db.update(contactsTable)
     .set(contact)
     .where(eq(contactsTable.id, id))
-    .returning();
+    .returning()
   return res
 }
 
@@ -159,12 +160,11 @@ export const checkDuplicate = async (contact) => {
     .from(contactsTable)
     .where(filters)
 
-  let check = false
-  for (let v of contacts) {
-    const {id, ...data} = v
-    console.log({data, check: isEqual(data, contact)})
+  for (const v of contacts) {
+    const { id, ...data } = v
+    console.log({ data, check: isEqual(data, contact) })
     if (isEqual(data, contact)) {
-       return true
+      return true
     }
   }
   return false

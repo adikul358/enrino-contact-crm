@@ -7,13 +7,13 @@ export const build = (opts = {}) => {
   app.register(cors, {
     origin: (origin, cb) => {
       const hostname = new URL(origin).hostname
-      if(hostname === "localhost"){
+      if (hostname === 'localhost') {
         //  Request from localhost will pass
         cb(null, true)
         return
       }
       // Generate an error on other origins, disabling access
-      cb(new Error("Not allowed"), false)
+      cb(new Error('Not allowed'), false)
     }
   })
 
