@@ -3,7 +3,8 @@ import {
   selectContacts, 
   updateContact, 
   deleteContact as deleteContactDrizzle, 
-  checkDuplicate } from "../db"
+  checkDuplicate, 
+  selectContact} from "../db"
 
 async function getContacts(request, reply) {
   const result = await selectContacts()
@@ -23,12 +24,26 @@ async function postContacts(request, reply) {
 
 async function putContacts(request, reply) {
   const { id } = request.params
-  const result = await updateContact(id, request.body)
+  const updateData = request.body
+
+  // Check if id exists
+  let result = await selectContact(id)
   if (result.length > 0) {
-    return { result: result[0] }
+
+    // Check duplicate
+    const duplicate = await checkDuplicate({id, ...updateData})
+    if (!duplicate) {
+
+      result = await updateContact(id, request.body)
+      return { result: result[0] }
+
+      
+    } else {
+      reply.code(400).send({ error: "Contact already exists" })
+    }
+
   } else {
-    reply.code(404)
-      .send({ error: 'Contact not found' })
+    reply.code(404).send({ error: 'Contact not found' })
   }
 }
 

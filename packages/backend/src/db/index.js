@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/node-postgres'
-import { eq } from 'drizzle-orm'
+import { and, eq, ne } from 'drizzle-orm'
 import { contactsTable } from './schema'
 import isEqual from '../lib/isEqual'
 
@@ -115,6 +115,13 @@ const db = drizzle(process.env.DATABASE_URL)
 
 // main()
 
+export const selectContact = async (id) => {
+  const contacts = await db.select()
+    .from(contactsTable)
+    .where(eq(contactsTable.id, id))
+  return contacts
+}
+
 export const selectContacts = async () => {
   const contacts = await db.select()
     .from(contactsTable)
@@ -143,10 +150,16 @@ export const deleteContact = async (id) => {
 }
 
 export const checkDuplicate = async (contact) => {
+  let filters
+  if (contact.id) {
+    filters = and(eq(contactsTable.email, contact.email), ne(contactsTable.id, contact.id))
+  } else {
+    filters = eq(contactsTable.email, contact.email)
+  }
   const contacts = await db.select()
     .from(contactsTable)
-    .where(eq(contactsTable.email, contact.email))
-  console.log({contacts})
+    .where(filters)
+
   let check = false
   for (let v of contacts) {
     const {id, ...data} = v

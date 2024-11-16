@@ -18,6 +18,11 @@ const UpdateDialog = ({ open, setOpen, data, refresh }) => {
     company: "",
     jobTitle: ""
   })
+  const [alertMsg, setAlertMsg] = useState({
+    severity: "success",
+    message: `Updated ${formData.firstName} ${formData.lastName} successfully`
+  })
+
 
   useEffect(() => {
     setFormData({
@@ -34,19 +39,27 @@ const UpdateDialog = ({ open, setOpen, data, refresh }) => {
     setOpen(false);
   };
 
-  const handleAdd = async () => {
+  const handleUpdate = async () => {
     const res = await (await fetch(`http://localhost:3000/contacts/${data.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     })).json()
     console.log(res)
-    setOpen(false)
-    setAlertOpen(true)
-    refresh()
+    if (res.error) {
+      setAlertMsg({
+        severity: "error",
+        message: res.error
+      })
+      setAlertOpen(true)
+    } else {
+      setAlertOpen(true)
+      setOpen(false)
+      refresh()
+    }
   };
 
-  const handleUpdate = (field) => (e) => {
+  const handleFieldUpdate = (field) => (e) => {
     const delta = {}
     delta[field] = e.target.value
     setFormData({ ...formData, ...delta })
@@ -71,38 +84,38 @@ const UpdateDialog = ({ open, setOpen, data, refresh }) => {
               <TextField
                 label="First Name"
                 value={formData.firstName}
-                onChange={handleUpdate("firstName")}
+                onChange={handleFieldUpdate("firstName")}
                 sx={{ width: "100%" }}
               />
               <TextField
                 label="Last Name"
                 value={formData.lastName}
-                onChange={handleUpdate("lastName")}
+                onChange={handleFieldUpdate("lastName")}
                 sx={{ width: "100%" }}
               />
             </Stack>
             <TextField
               label="Email"
               value={formData.email}
-              onChange={handleUpdate("email")}
+              onChange={handleFieldUpdate("email")}
               sx={{ width: "100%" }}
             />
             <TextField
               label="Phone"
               value={formData.phone}
-              onChange={handleUpdate("phone")}
+              onChange={handleFieldUpdate("phone")}
               sx={{ width: "100%" }}
             />
             <TextField
               label="Company"
               value={formData.company}
-              onChange={handleUpdate("company")}
+              onChange={handleFieldUpdate("company")}
               sx={{ width: "100%" }}
             />
             <TextField
               label="Job Title"
               value={formData.jobTitle}
-              onChange={handleUpdate("jobTitle")}
+              onChange={handleFieldUpdate("jobTitle")}
               sx={{ width: "100%" }}
             />
           </Stack>
@@ -110,11 +123,11 @@ const UpdateDialog = ({ open, setOpen, data, refresh }) => {
         <DialogActions>
           <Stack spacing={2} direction="row">
             <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-            <Button variant="contained" onClick={handleAdd}>Update</Button>
+            <Button variant="contained" onClick={handleUpdate}>Update</Button>
           </Stack>
         </DialogActions>
       </Dialog>
-      <AlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={`Updated ${formData.firstName} ${formData.lastName} successfully`} />
+      <AlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={alertMsg} />
     </>
   );
 }

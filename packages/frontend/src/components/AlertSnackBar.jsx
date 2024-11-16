@@ -21,11 +21,11 @@ export default function AlertSnackbar({open, setOpen, message}) {
       >
         <Alert
             onClose={handleClose}
-            severity="success"
+            severity={message.severity}
             variant="standard"
             sx={{ width: '100%' }}
         >
-            {message}
+            {message.message}
         </Alert>
       </Snackbar>
     </div>

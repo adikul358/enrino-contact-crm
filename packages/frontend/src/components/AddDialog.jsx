@@ -18,6 +18,10 @@ const AddDialog = ({ open, setOpen, refresh }) => {
     company: "",
     jobTitle: ""
   })
+  const [alertMsg, setAlertMsg] = useState({
+    severity: "success",
+    message: `Added ${formData.firstName} ${formData.lastName} successfully`
+  })
 
   const handleClose = () => {
     setOpen(false);
@@ -30,9 +34,17 @@ const AddDialog = ({ open, setOpen, refresh }) => {
       body: JSON.stringify(formData)
     })).json()
     console.log(res)
-    setOpen(false)
-    setAlertOpen(true)
-    refresh()
+    if (res.error) {
+      setAlertMsg({
+        severity: "error",
+        message: res.error
+      })
+      setAlertOpen(true)
+    } else {
+      setAlertOpen(true)
+      setOpen(false)
+      refresh()
+    }
   };
 
   const handleUpdate = (field) => (e) => {
@@ -43,67 +55,67 @@ const AddDialog = ({ open, setOpen, refresh }) => {
 
   return (
     <>
-    <Dialog
-      fullWidth={true}
-      maxWidth={'sm'}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {"Add Contact"}
-      </DialogTitle>
-      <DialogContent>
-        <Stack spacing={3} direction="column" sx={{ paddingTop: 1 }}>
-          <Stack spacing={2} direction="row" sx={{ display: "flex" }}>
+      <Dialog
+        fullWidth={true}
+        maxWidth={'sm'}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Add Contact"}
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={3} direction="column" sx={{ paddingTop: 1 }}>
+            <Stack spacing={2} direction="row" sx={{ display: "flex" }}>
+              <TextField
+                label="First Name"
+                value={formData.firstName}
+                onChange={handleUpdate("firstName")}
+                sx={{ width: "100%" }}
+              />
+              <TextField
+                label="Last Name"
+                value={formData.lastName}
+                onChange={handleUpdate("lastName")}
+                sx={{ width: "100%" }}
+              />
+            </Stack>
             <TextField
-              label="First Name"
-              value={formData.firstName}
-              onChange={handleUpdate("firstName")}
+              label="Email"
+              value={formData.email}
+              onChange={handleUpdate("email")}
               sx={{ width: "100%" }}
             />
             <TextField
-              label="Last Name"
-              value={formData.lastName}
-              onChange={handleUpdate("lastName")}
+              label="Phone"
+              value={formData.phone}
+              onChange={handleUpdate("phone")}
+              sx={{ width: "100%" }}
+            />
+            <TextField
+              label="Company"
+              value={formData.company}
+              onChange={handleUpdate("company")}
+              sx={{ width: "100%" }}
+            />
+            <TextField
+              label="Job Title"
+              value={formData.jobTitle}
+              onChange={handleUpdate("jobTitle")}
               sx={{ width: "100%" }}
             />
           </Stack>
-          <TextField
-            label="Email"
-            value={formData.email}
-            onChange={handleUpdate("email")}
-            sx={{ width: "100%" }}
-          />
-          <TextField
-            label="Phone"
-            value={formData.phone}
-            onChange={handleUpdate("phone")}
-            sx={{ width: "100%" }}
-          />
-          <TextField
-            label="Company"
-            value={formData.company}
-            onChange={handleUpdate("company")}
-            sx={{ width: "100%" }}
-          />
-          <TextField
-            label="Job Title"
-            value={formData.jobTitle}
-            onChange={handleUpdate("jobTitle")}
-            sx={{ width: "100%" }}
-          />
-        </Stack>
-      </DialogContent>
-      <DialogActions>
-        <Stack spacing={2} direction="row">
-          <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" onClick={handleAdd}>Add</Button>
-        </Stack>
-      </DialogActions>
-    </Dialog>
-    <AlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={`Added ${formData.firstName} ${formData.lastName} successfully`} />
+        </DialogContent>
+        <DialogActions>
+          <Stack spacing={2} direction="row">
+            <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+            <Button variant="contained" onClick={handleAdd}>Add</Button>
+          </Stack>
+        </DialogActions>
+      </Dialog>
+      <AlertSnackbar open={alertOpen} setOpen={setAlertOpen} message={alertMsg} />
     </>
   );
 }

@@ -24,8 +24,7 @@ export default function ContactsTable() {
     setOpenUpdateDialog(true)
   }
   const handleDeleteClick = (id, row) => () => {
-    const fullName = `${row.firstName || ''} ${row.lastName || ''}`
-    setContactDeleteDialog({ id, fullName })
+    setContactDeleteDialog({ id, ...row })
     setOpenDeleteDialog(true)
   }
 
@@ -75,7 +74,7 @@ export default function ContactsTable() {
       setTimeout(() => {
         setLoading(false)
         setData(res.result)
-      }, 1000)
+      }, 500)
     })()
   }, [])
 
