@@ -1,0 +1,7 @@
+{
+    "name": "enrino-contact-crm",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ]
+}   
