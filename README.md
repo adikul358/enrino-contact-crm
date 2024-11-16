@@ -1,4 +1,6 @@
-# backend
+# Contact Management
+
+This Contact Management System uses a Node.js REST API for backend operations and a React.js frontend with MUI. It is built in a Bun monorepo for dependency management. The features are displaying contacts, sorting and filtering, updating and deleting contacts, and adding new contacts.
 
 To install dependencies:
 
@@ -8,8 +10,14 @@ bun install
 
 To run:
 
+1. Backend
 ```bash
-bun run index.ts
+cd packages/backend
+bun start
 ```
 
-This project was created using `bun init` in bun v1.1.34. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+2. Frontend
+```bash
+cd packages/frontend
+bun start
+```

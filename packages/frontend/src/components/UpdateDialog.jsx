@@ -40,7 +40,7 @@ const UpdateDialog = ({ open, setOpen, data, refresh }) => {
   };
 
   const handleUpdate = async () => {
-    const res = await (await fetch(`http://localhost:3000/contacts/${data.id}`, {
+    const res = await (await fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/contacts/${data.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)

@@ -31,7 +31,7 @@ const DeleteDialog = ({ open, setOpen, data, refresh }) => {
 
 
   const handleDelete = async () => {
-    const res = await (await fetch(`http://localhost:3000/contacts/${data.id}`, { method: "DELETE" })).json()
+    const res = await (await fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/contacts/${data.id}`, { method: "DELETE" })).json()
     console.log(res)
     if (res.error) {
       setAlertMsg({

@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { and, eq, ne } from 'drizzle-orm'
 import { contactsTable } from './schema'

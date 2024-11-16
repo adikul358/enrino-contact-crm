@@ -70,7 +70,7 @@ export default function ContactsTable() {
 
   useEffect(() => {
     (async function () {
-      const res = await ((await fetch("http://localhost:3000/contacts")).json())
+      const res = await ((await fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/contacts`)).json())
       setTimeout(() => {
         setLoading(false)
         setData(res.result)
@@ -79,7 +79,7 @@ export default function ContactsTable() {
   }, [])
 
   const refreshData = async () => {
-    const res = await ((await fetch("http://localhost:3000/contacts")).json())
+    const res = await ((await fetch(`http://localhost:${process.env.REACT_APP_BACKEND_PORT}/contacts`)).json())
     setData(res.result)
   }
 
