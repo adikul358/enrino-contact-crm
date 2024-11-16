@@ -8,9 +8,9 @@ I chose a future-proof, modern techstack:
 - Database:
   - **PostgreSQL** - A database with advanced plugins available such UUID generation (used in this project)
 - Backend:
-  - **Fastify** - A modern alternative webserver for Nodejs, easier to use as compared to Express with less boilerplate
-  - **Drizzle ORM** - An object-relational mapping for PostgreSQL database for intellisense, typesafety and integreation with JS rather than writing SQL queries
-- Frontend: React, MUI _(as per requirement)_
+  - [**Fastify**](https://fastify.dev/) - A modern alternative webserver for Nodejs, easier to use as compared to Express with less boilerplate
+  - [**Drizzle ORM**](https://orm.drizzle.team/) - An object-relational mapping for PostgreSQL database for intellisense, typesafety and integreation with JS rather than writing SQL queries
+- Frontend: React, [MUI](https://mui.com/) _(as per requirement)_
 
 To install dependencies:
 
